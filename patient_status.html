@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Patient Status</title>
+    <style>
+        body {
+                    background-image: url('patients.jpg'); /* specify the url of your image here */
+                    background-size: cover; /* scale the image to cover the entire background */
+                    background-repeat: no-repeat; /* don't repeat the image */
+        }
+        .patient-status-bg {
+                    background-image: url('patients.jpg');
+                    background-size: cover;
+                    background-repeat: no-repeat;
+        }
+    </style>
+  </head>
+  <body>
+    
+    <div>
+      <form>
+        <label for="patient_name">Enter patient name:</label>
+        <input type="text" id="patient_name" name="patient_name">
+        <button type="submit" id="check_status_button">Check Status</button>
+      </form>
+      <div id="status"></div>
+    </div>
+  </body>
+</html>

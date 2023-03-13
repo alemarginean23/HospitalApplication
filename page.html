@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+   
+  <head>
+    <title>Hospital Website</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+      /* Add CSS for styling the layout, positioning elements, etc. */
+      /* you can use class or id to add styles to them */
+
+      body {
+                    background-image: url('hospital.jpeg'); /* specify the url of your image here */
+                    background-size: cover; /* scale the image to cover the entire background */
+                    background-repeat: no-repeat; /* don't repeat the image */
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100vh;
+      }
+      /* you can use this to align a button in the middle */
+      .center-div {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100vh;
+                    
+      }
+      /* you can use this to style the button as a circle and add the doctor image */
+    .button-image {
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    background-image: url('doctor.jpg'); /* specify the url of your image here */
+                    background-size: cover; /* scale the image to cover the entire background */
+                    background-repeat: no-repeat; /* don't repeat the image */
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    font-size: 1.2em;
+                    font-weight: bold;
+                    color: #fff;
+                    text-decoration: none;
+    }
+    .submit-button {
+                    background-color: whitesmoke; /* background color of button */
+                    color: black; /* color of the text */
+                    border-radius: 10px; /* border-radius of the button */
+                    padding: 10px 20px; /* padding of the button */
+                    transition: all 0.2s ease-in-out; /* transition effect when hovered */
+                  }
+
+    .submit-button:hover {
+                    background-color: greenyellow; /* background color when hovered */
+                    transform: scale(1.05); /* scale effect when hovered */
+    }
+    .patient-button {
+                    width: 150px;
+                    height: 150px;
+                    /*background-color: #4CAF50; /* Green background */
+                    color: white; /* White text */
+                    padding: 10px 10px; /* Some padding */
+                    border: none; /* Remove border */
+                    cursor: pointer; /* Add a pointer cursor on hover */
+                    display: inline-block; /* Make the button inline */
+                    text-align: center; /* Center the text */
+                    text-decoration: none; /* Remove underline */
+                    position: absolute;
+                    bottom: 0;
+    }
+
+    .patient-button img {
+                    vertical-align: middle; /* Align the image vertically */
+                    margin-right: 10px; /* Add some margin to the right of the image */
+    }
+
+
+
+    </style>
+  </head>
+  <body>
+    <div class="center-div">
+      <a href="doctors.html" class="btn btn-primary button-image">Doctors</a>
+      <a href="patient_status.html" class="patient-button">
+        <img src="patient.png" alt="Patient Icon">
+        Check Patient Status
+      </a>
+    </div>
+    <div>
+      <form>
+        <div class="form-group">
+          <label for="name">Name:</label>
+        
+        <form>
+            <input type="text" id="name" name="name">
+            <select id="disease" name="disease">
+                <option value="headache">headache</option>
+                <option value="tonsillitis">tonsillitis</option>
+                <option value="flu">flu</option>
+                <option value="anemia">anemia</option>
+                <option value="otitis">otitis</option>
+                <option value="appendicitis">appendicitis</option>
+                <option value="hand fracture">hand fracture</option>
+                <option value="hernia">hernia</option>
+                <option value="pancreatitis">pancreatitis</option>
+                <option value="myasthenia gravis">myasthenia gravis</option>
+            </select>
+            <button type="submit" class="submit-button">Submit
+                
+            </button>
+            
+              
+          </form>
+          
+          
+          
+      </form>
+    </div>
+    
+  </body>
+</html>
