@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Doctors</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f7f6; /* Light gray background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 900px;
+        }
+        h2 {
+            margin-bottom: 25px;
+            color: #17a2b8; /* Bootstrap info color */
+        }
+        /* Style the table for better readability */
+        .table th {
+            background-color: #17a2b8;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center">Available Doctors</h2>
+    <a href="page.html" class="btn btn-secondary mb-3">← Back to Main Page</a>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th># (DB ID)</th>
+            <th>Name</th>
+            <th>ID Medic</th>
+            <th>Specialty (Placeholder)</th>
+        </tr>
+        </thead>
+        <tbody id="doctors-table-body">
+        </tbody>
+    </table>
+</div>
+<script>
+    // *** STEP 1: DEFINE THE API ENDPOINT ***
+    // This is the URL where your Java backend will run and provide the data.
+    // Assuming your Java server runs locally on port 8080 and has an endpoint called /api/doctors
+    const API_URL = 'http://localhost:8080/api/doctors';
+
+    function loadDoctors() {
+        const tbody = document.getElementById('doctors-table-body');
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center">Loading doctors...</td></tr>'; // Loading message
+
+        // 1. Fetch data from the assumed Java backend API
+        fetch(API_URL)
+            .then(response => {
+                // Check if the request was successful
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json(); // Convert the response body to JSON
+            })
+            .then(doctorsData => {
+                // 2. Clear loading message and populate table with real data
+                tbody.innerHTML = '';
+
+                if (doctorsData.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">No doctors found in the database.</td></tr>';
+                    return;
+                }
+
+                doctorsData.forEach(doctor => {
+                    const row = tbody.insertRow();
+
+                    // Note: The object properties (id, name, idMedic, specialty) must match
+                    // what your Java code sends back in the JSON structure.
+
+                    row.insertCell().textContent = doctor.id || 'N/A';
+                    row.insertCell().textContent = doctor.name || 'N/A';
+                    row.insertCell().textContent = doctor.idMedic || 'N/A';
+                    row.insertCell().textContent = doctor.specialty || 'To be added';
+                });
+            })
+            .catch(error => {
+                // 3. Handle any errors (e.g., if the Java server isn't running)
+                console.error('Error fetching data:', error);
+                tbody.innerHTML = `<tr><td colspan="4" class="text-danger text-center">Failed to connect to the backend server. Is the Java application running? (${error.message})</td></tr>`;
+            });
+    }
+
+    // Run the function when the page loads
+    document.addEventListener('DOMContentLoaded', loadDoctors);
+</script>
+</body>
+</html>

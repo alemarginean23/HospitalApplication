@@ -1,29 +1,100 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Patient Status</title>
-    <style>
-        body {
-                    background-image: url('patients.jpg'); /* specify the url of your image here */
-                    background-size: cover; /* scale the image to cover the entire background */
-                    background-repeat: no-repeat; /* don't repeat the image */
-        }
-        .patient-status-bg {
-                    background-image: url('patients.jpg');
-                    background-size: cover;
-                    background-repeat: no-repeat;
-        }
-    </style>
-  </head>
-  <body>
-    
-    <div>
-      <form>
-        <label for="patient_name">Enter patient name:</label>
-        <input type="text" id="patient_name" name="patient_name">
-        <button type="submit" id="check_status_button">Check Status</button>
-      </form>
-      <div id="status"></div>
+<head>
+  <title>Patient Status</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-image: url('patients.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .status-container {
+      background-color: rgba(255, 255, 255, 0.95); /* White transparent background */
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      width: 400px;
+      text-align: center;
+    }
+    #status {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      min-height: 50px; /* Ensure space for results */
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+<div class="status-container">
+  <h3>Check Patient Status</h3>
+  <hr>
+  <form>
+    <div class="form-group">
+      <label for="patient_name">Enter Patient Name:</label>
+      <input type="text" id="patient_name" name="patient_name" class="form-control" required>
     </div>
-  </body>
+    <button type="submit" id="check_status_button" class="btn btn-primary w-100">Check Status</button>
+  </form>
+
+  <div id="status">Status will appear here.</div>
+</div>
+
+<script>
+  const API_BASE_URL = 'http://localhost:8080/api/patient-status?name=';
+
+  document.getElementById('check_status_button').addEventListener('click', function(event) {
+    event.preventDefault(); // Stop the form from submitting normally
+
+    const patientName = document.getElementById('patient_name').value.trim();
+    const statusDiv = document.getElementById('status');
+
+    statusDiv.innerHTML = '<p class="text-info text-center">Searching database...</p>';
+
+    if (!patientName) {
+      statusDiv.innerHTML = '<p class="text-danger text-center">Please enter a patient name.</p>';
+      return;
+    }
+
+    // Encode the name for the URL (e.g., spaces become %20)
+    const encodedName = encodeURIComponent(patientName);
+    const fetchUrl = API_BASE_URL + encodedName;
+
+    fetch(fetchUrl)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('API server error: ' + response.statusText);
+              }
+              return response.json();
+            })
+            .then(data => {
+              if (data.length === 0) {
+                statusDiv.innerHTML = '<p class="text-danger text-center">❌ Patient found, but no scheduled appointments.</p>';
+              } else {
+                let html = '<h5>✅ Appointments Found:</h5><ul>';
+                data.forEach(appointment => {
+                  const date = new Date(appointment.time); // Convert timestamp string to Date object
+
+                  html += `<li><span class="font-weight-bold">${appointment.reason}</span> ` +
+                          `with Dr. <span class="text-primary">${appointment.doctorName}</span> ` +
+                          `on ${date.toLocaleDateString()} at ${date.toLocaleTimeString()}.</li>`;
+                });
+                html += '</ul>';
+                statusDiv.innerHTML = html;
+              }
+            })
+            .catch(error => {
+              console.error('Fetch error:', error);
+              statusDiv.innerHTML = `<p class="text-danger text-center">❌ Failed to connect to server. Is the Java server running? (${error.message})</p>`;
+            });
+  });
+</script>
+</body>
 </html>

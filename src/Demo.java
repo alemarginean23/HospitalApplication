@@ -169,7 +169,6 @@ public class Demo {
         System.out.println("\n");
         hospital.doctors(doctorsList);
 
-
     }
 
 }

@@ -15,9 +15,6 @@ public class Patient extends Person {
         this.diseases=new ArrayList<>();
     }
 
-
-
-
     public List<Disease> getDiseases() {
         return diseases;
     }

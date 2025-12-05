@@ -1,121 +1,192 @@
 <!DOCTYPE html>
 <html>
-   
-  <head>
+<head>
     <title>Hospital Website</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-      /* Add CSS for styling the layout, positioning elements, etc. */
-      /* you can use class or id to add styles to them */
+        /* --- General Layout --- */
+        body {
+            background-image: url('hospital.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            /* Use min-height and column flow to stack elements */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center horizontally */
+            justify-content: space-around; /* Distribute space vertically */
+        }
+        /* --- Navigation Button Styling (Doctor/Patient) --- */
+        .navigation-section {
+            display: flex;
+            justify-content: space-around;
+            width: 80%; /* Control the width of the button row */
+            margin-top: 50px;
+        }
+        .button-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-image: url('doctor.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            /* Added margin to separate from the form */
+            margin: 0 50px;
+        }
+        .patient-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 150px;
+            height: 150px;
+            background-color: rgba(0, 0, 0, 0.6); /* Slightly darker background for visibility */
+            border-radius: 10px;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+        }
+        .patient-button img {
+            width: 60px; /* Adjust icon size */
+            height: 60px;
+            margin-bottom: 5px;
+        }
+        /* --- Form Styling --- */
+        .submission-form-container {
+            background-color: rgba(255, 255, 255, 0.85); /* White transparent background */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px; /* Space from the bottom */
+            width: 350px;
+        }
+        .submit-button {
+            background-color: whitesmoke;
+            color: black;
+            border-radius: 10px;
+            padding: 10px 20px;
+            transition: all 0.2s ease-in-out;
+            margin-top: 15px; /* Added margin */
+            width: 100%;
+        }
 
-      body {
-                    background-image: url('hospital.jpeg'); /* specify the url of your image here */
-                    background-size: cover; /* scale the image to cover the entire background */
-                    background-repeat: no-repeat; /* don't repeat the image */
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100vh;
-      }
-      /* you can use this to align a button in the middle */
-      .center-div {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    height: 100vh;
-                    
-      }
-      /* you can use this to style the button as a circle and add the doctor image */
-    .button-image {
-                    width: 150px;
-                    height: 150px;
-                    border-radius: 50%;
-                    background-image: url('doctor.jpg'); /* specify the url of your image here */
-                    background-size: cover; /* scale the image to cover the entire background */
-                    background-repeat: no-repeat; /* don't repeat the image */
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    text-align: center;
-                    font-size: 1.2em;
-                    font-weight: bold;
-                    color: #fff;
-                    text-decoration: none;
-    }
-    .submit-button {
-                    background-color: whitesmoke; /* background color of button */
-                    color: black; /* color of the text */
-                    border-radius: 10px; /* border-radius of the button */
-                    padding: 10px 20px; /* padding of the button */
-                    transition: all 0.2s ease-in-out; /* transition effect when hovered */
-                  }
-
-    .submit-button:hover {
-                    background-color: greenyellow; /* background color when hovered */
-                    transform: scale(1.05); /* scale effect when hovered */
-    }
-    .patient-button {
-                    width: 150px;
-                    height: 150px;
-                    /*background-color: #4CAF50; /* Green background */
-                    color: white; /* White text */
-                    padding: 10px 10px; /* Some padding */
-                    border: none; /* Remove border */
-                    cursor: pointer; /* Add a pointer cursor on hover */
-                    display: inline-block; /* Make the button inline */
-                    text-align: center; /* Center the text */
-                    text-decoration: none; /* Remove underline */
-                    position: absolute;
-                    bottom: 0;
-    }
-
-    .patient-button img {
-                    vertical-align: middle; /* Align the image vertically */
-                    margin-right: 10px; /* Add some margin to the right of the image */
-    }
-
-
-
+        .submit-button:hover {
+            background-color: greenyellow;
+            transform: scale(1.05);
+        }
     </style>
-  </head>
-  <body>
-    <div class="center-div">
-      <a href="doctors.html" class="btn btn-primary button-image">Doctors</a>
-      <a href="patient_status.html" class="patient-button">
+</head>
+<body>
+<body>
+<div class="navigation-section">
+    <a href="doctors.html" class="btn btn-primary button-image">Doctors</a>
+
+    <a href="patients.html" class="btn btn-primary button-image">
+        View All Patients
+    </a>
+
+    <a href="patient_status.html" class="patient-button">
         <img src="patient.png" alt="Patient Icon">
         Check Patient Status
-      </a>
-    </div>
-    <div>
-      <form>
+    </a>
+</div>
+
+
+<div class="submission-form-container">
+    <form>
+        <h4 class="text-center">Schedule New Appointment</h4>
         <div class="form-group">
-          <label for="name">Name:</label>
-        
-        <form>
-            <input type="text" id="name" name="name">
-            <select id="disease" name="disease">
+            <label for="name">Patient Name:</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="disease">Reason for Visit:</label>
+            <select id="disease" name="disease" class="form-control">
                 <option value="headache">headache</option>
-                <option value="tonsillitis">tonsillitis</option>
                 <option value="flu">flu</option>
                 <option value="anemia">anemia</option>
-                <option value="otitis">otitis</option>
-                <option value="appendicitis">appendicitis</option>
                 <option value="hand fracture">hand fracture</option>
                 <option value="hernia">hernia</option>
-                <option value="pancreatitis">pancreatitis</option>
-                <option value="myasthenia gravis">myasthenia gravis</option>
             </select>
-            <button type="submit" class="submit-button">Submit
-                
-            </button>
-            
-              
-          </form>
-          
-          
-          
-      </form>
-    </div>
-    
-  </body>
+        </div>
+        <button type="submit" class="submit-button">Submit Appointment</button>
+    </form>
+</div>
+
+<script>
+    const API_SUBMIT_URL = 'http://localhost:8080/api/appointments';
+    const form = document.querySelector('.submission-form-container form');
+    const submitButton = document.querySelector('.submit-button');
+
+    // Function to display the result message
+    function showMessage(message, isSuccess) {
+        // Create a temporary alert div
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert mt-3 ${isSuccess ? 'alert-success' : 'alert-danger'}`;
+        alertDiv.textContent = message;
+
+        // Insert the message right after the form
+        form.parentNode.insertBefore(alertDiv, form.nextSibling);
+
+        // Remove the message after a few seconds
+        setTimeout(() => {
+            alertDiv.remove();
+        }, 5000);
+    }
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Stop the default page reload
+
+        const patientName = document.getElementById('name').value.trim();
+        const reason = document.getElementById('disease').value;
+
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
+
+        const dataToSend = {
+            name: patientName,
+            reason: reason
+        };
+
+        fetch(API_SUBMIT_URL, {
+            method: 'POST', // We use POST to send data to the server
+            headers: {
+                'Content-Type': 'application/json',
+                // CORS headers are set by the Java server, but the Content-Type is vital
+            },
+            body: JSON.stringify(dataToSend)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    // If the server returns a 4xx or 5xx status code
+                    return response.json().then(err => { throw new Error(err.message || 'Server failed to process request.'); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Success response from the Java server
+                form.reset(); // Clear the form fields
+                showMessage(`✅ Success! ${data.message}`, true);
+            })
+            .catch(error => {
+                console.error('Submission error:', error);
+                showMessage(`❌ Error: ${error.message}. Please try again.`, false);
+            })
+            .finally(() => {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit Appointment';
+            });
+    });
+</script>
+</body>
 </html>

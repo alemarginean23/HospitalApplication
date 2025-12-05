@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Registered Patients</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f7f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 900px;
+        }
+        h2 {
+            margin-bottom: 25px;
+            color: #28a745; /* Bootstrap success color */
+        }
+        .table th {
+            background-color: #28a745;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="text-center">Registered Patient List</h2>
+    <a href="page.html" class="btn btn-secondary mb-3">← Back to Main Page</a>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>DB ID</th>
+            <th>Patient Name</th>
+            <th>CNP (Identifier)</th>
+            <th>Phone</th>
+        </tr>
+        </thead>
+        <tbody id="patients-table-body">
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const API_URL = 'http://localhost:8080/api/patients';
+
+    function loadPatients() {
+        const tbody = document.getElementById('patients-table-body');
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center">Loading patients...</td></tr>';
+
+        fetch(API_URL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(patientsData => {
+                tbody.innerHTML = '';
+
+                if (patientsData.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center">No patients found in the database.</td></tr>';
+                    return;
+                }
+
+                patientsData.forEach(patient => {
+                    const row = tbody.insertRow();
+
+                    row.insertCell().textContent = patient.id || 'N/A';
+                    row.insertCell().textContent = patient.name || 'N/A';
+                    row.insertCell().textContent = patient.cnp || 'N/A';
+                    row.insertCell().textContent = patient.phone || 'N/A';
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                tbody.innerHTML = `<tr><td colspan="4" class="text-danger text-center">Failed to connect to the backend server. (${error.message})</td></tr>`;
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadPatients);
+</script>
+</body>
+</html>
